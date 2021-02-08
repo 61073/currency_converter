@@ -2,7 +2,9 @@
 
 ## Overview
 This application will give a list of currency options, and then allow an input value to be converted.
-Current version is back end logic, future update will include front end.
+Currency rates are determined from an API from [exchangeratesapi.io](http://exchangeratesapi.io).
+
+Current version of this application is back end logic, future update will include front end.
 
 ## Tools and languages
 - Python 3.7 - for code development and unit testing

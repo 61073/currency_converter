@@ -22,7 +22,12 @@ class CurrencyConverter:
         if currency_from:
             self.base_currency = currency_from
             logger.info(f"Set base currency to {currency_from}")
-        self._get_conversion_rate(currency_to)
+        conversion_rate = self._get_conversion_rate(currency_to)
+        output_value = input_value * conversion_rate
+        rounded_output_value = round(output_value, 2)
+        logger.info(f"{input_value} {self.base_currency} converted successfully to {rounded_output_value} "
+                    f"{currency_to}")
+        return rounded_output_value
 
     def _get_conversion_rate(self, currency_to: str):
         """
@@ -40,4 +45,6 @@ class CurrencyConverter:
         elif not rates_data.get(currency_to):
             error_message = f"Currency of {currency_to} could not be found in the returned Currency Data"
             handle_exception(error_message, CurrencyNotFoundError)
-        return rates_data[currency_to]
+        conversion_rate = rates_data[currency_to]
+        logger.info(f"Conversion rate found successfully as: {conversion_rate}")
+        return conversion_rate

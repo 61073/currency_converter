@@ -6,7 +6,7 @@ from src.exceptions.converter_exceptions import CurrencyNotFoundError, ApiDataEr
 
 success_response_eur = {
     "rates": {
-        "EUR": 1.1390754045
+        "EUR": 1.2
     },
     "base": "GBP",
     "date": "2021-01-01"
@@ -20,10 +20,15 @@ error_response_eur = {
 class TestCurrencyConverter(TestCase):
 
     # mock the API endpoint to give 1.50 conversion
-    def test_convert_success(self):
+    @patch.object(requests, 'get')
+    def test_convert_success(self, mock_get):
+        mock_object = Mock()
+        mock_get.return_value = mock_object
+        mock_object.json.return_value = success_response_eur
+        # mock request and response above
         convert_class = CurrencyConverter()
-        actual_result = convert_class.convert(1.50, "EUR", "GBP")
-        expected_result = 2.25
+        actual_result = convert_class.convert(2.50, "EUR", "GBP")
+        expected_result = 3.00
         self.assertEqual(expected_result, actual_result)
 
     @patch.object(requests, 'get')
@@ -34,7 +39,7 @@ class TestCurrencyConverter(TestCase):
         # mock request and response above
         convert_class = CurrencyConverter()
         actual_result = convert_class._get_conversion_rate("EUR")
-        expected_result = 1.1390754045
+        expected_result = 1.2
         self.assertEqual(expected_result, actual_result)
 
     @patch.object(requests, 'get')

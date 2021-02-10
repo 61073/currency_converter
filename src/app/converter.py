@@ -1,6 +1,8 @@
+# Standard python imports
 import logging
 import requests
 
+# Local imports
 from src.exceptions.converter_exceptions import CurrencyNotFoundError, ApiDataError
 
 logger = logging.getLogger(__name__)
